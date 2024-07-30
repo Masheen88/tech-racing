@@ -1,0 +1,28 @@
+/* Add this to your CSS file */
+
+.control-button {
+  position: fixed;
+  bottom: 10%; /* Adjust this value as needed */
+  font-size: 2.5rem;
+  font-weight: bold;
+  z-index: 1000;
+}
+
+#throttle-button {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#brake-button {
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 5%; /* Adjust this value as needed */
+}
+
+#left-button {
+  left: 40%; /* Adjust this value as needed */
+}
+
+#right-button {
+  left: 60%; /* Adjust this value as needed */
+}
