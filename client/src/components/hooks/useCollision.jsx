@@ -276,7 +276,7 @@ export const useCollisionDetection = (
       }
     };
 
-    const intervalId = setInterval(handleCollisionPushOut, 20);
+    const intervalId = setInterval(handleCollisionPushOut, 5);
 
     return () => clearInterval(intervalId);
   }, [carPosition]);

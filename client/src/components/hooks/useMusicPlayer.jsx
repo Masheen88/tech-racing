@@ -7,7 +7,7 @@ export const useMusicPlayer = (isReverbEnabled) => {
   const convolverRef = useRef(null);
   const reverbGainNodeRef = useRef(null);
 
-  const [volume, setVolume] = useState(0.19); // Default volume
+  const [volume, setVolume] = useState(0.09); // Default volume
 
   useEffect(() => {
     // Initialize audio context and related nodes

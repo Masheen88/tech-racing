@@ -292,13 +292,11 @@ function MoveCar({
 
     return () => clearInterval(intervalId);
   }, [
-    // setRotation,    speed,
     keyState,
     interpolateRotation,
     isReversing,
     setIsReversing,
     checkCollision,
-    // position.left,
     setRotation,
     speed,
     rotation,

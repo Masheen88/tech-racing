@@ -10,7 +10,7 @@ app.use(compression());
 
 const allowedOrigins = [
   "*",
-  "http://66.128.253.47:5173",
+  "http://72.14.201.224:5173",
   "http://192.168.50.58:5173",
   "http://localhost:5173",
 ];
@@ -18,7 +18,7 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: allowedOrigins,
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
@@ -48,18 +48,27 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
     credentials: true,
   },
+  transports: ["websocket"], // Force WebSocket transport only
 });
 
 const users = new Map();
+
 const SERVER_TICK_RATE = 1000 / 60;
-const CLIENT_UPDATE_RATE = 1000 / 20;
+// Increase if needed to reduce network load
+const CLIENT_UPDATE_RATE = 1000 / 30;
 
 function gameLoop() {
   // Perform game logic, physics calculations, etc.
 }
 
 function sendUpdates() {
-  const updates = Array.from(users.values());
+  const updates = Array.from(users.values()).map((user) => ({
+    socketId: user.socketId,
+    carPosition: user.carPosition,
+    carRotation: user.carRotation,
+    speed: user.speed,
+    timestamp: user.timestamp,
+  }));
   io.emit("gameUpdate", updates);
 }
 
@@ -107,7 +116,7 @@ io.on("connection", (socket) => {
       timestamp: Date.now(),
     });
   });
-});
+}); /*INFO */
 
 app.get("/audio/:filename", (req, res) => {
   const filePath = path.join(__dirname, "audio", req.params.filename);

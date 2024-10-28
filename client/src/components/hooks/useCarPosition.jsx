@@ -116,15 +116,20 @@ export function useCarPosition({
 
   const updatePosition = useCallback(() => {
     if (!isCurrentUserCar) {
-      if (
-        position.top !== carPosition.top ||
-        position.left !== carPosition.left
-      ) {
-        setPosition(carPosition);
-      }
-      if (rotation !== carRotation) {
-        setRotation(carRotation);
-      }
+      const currentTime = performance.now();
+      const deltaTime = (currentTime - lastUpdateTime.current) / 1000;
+
+      // Interpolate position and rotation
+      const interpolatedPosition = {
+        top: position.top + (carPosition.top - position.top) * deltaTime,
+        left: position.left + (carPosition.left - position.left) * deltaTime,
+      };
+      const interpolatedRotation =
+        rotation + (carRotation - rotation) * deltaTime;
+
+      setPosition(interpolatedPosition);
+      setRotation(interpolatedRotation);
+
       updateEngineSound(carSpeed);
 
       if (checkCollision(position.top, position.left) === "ramp") {

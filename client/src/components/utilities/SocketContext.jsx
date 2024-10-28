@@ -9,20 +9,34 @@ const SocketContext = createContext();
 export const SocketProvider = ({ children }) => {
   console.log("SocketProvider", "children", children);
   // Dynamically determine the server address
+  // const serverAddress = useMemo(() => {
+  //   // Check if the app is running on a development environment
+  //   // and adjust the address accordingly
+  //   const host = window.location.hostname;
+  //   const protocol = window.location.protocol;
+  //   // Assuming port 3001 for your Socket.IO server
+  //   const port = "3001";
+  //   return host === "localhost"
+  //     ? `${protocol}//localhost:${port}`
+  //     : `${protocol}//72.14.201.224:${port}`;
+  // }, []);
+
   const serverAddress = useMemo(() => {
-    // Check if the app is running on a development environment
-    // and adjust the address accordingly
     const host = window.location.hostname;
     const protocol = window.location.protocol;
-    // Assuming port 3001 for your Socket.IO server
     const port = "3001";
     return host === "localhost"
       ? `${protocol}//localhost:${port}`
-      : `${protocol}//66.128.253.47:${port}`;
+      : `${protocol}//72.14.201.224:${port}`;
   }, []);
 
   // Initialize socket connection with dynamic server address
-  const socket = useMemo(() => io(serverAddress), [serverAddress]);
+  // const socket = useMemo(() => io(serverAddress), [serverAddress]);
+  const socket = useMemo(
+    () =>
+      io(serverAddress, { transports: ["websocket"], withCredentials: true }),
+    [serverAddress]
+  );
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>

@@ -16,7 +16,7 @@ export default defineConfig({
     host: "0.0.0.0", // Listen on all network interfaces
     port: 5173,
     cors: {
-      origin: ["*", "http://localhost:5173", "http://66.128.253.47:5173"],
+      origin: ["*", "http://localhost:5173", "http://72.14.201.224:517"],
       methods: ["GET", "POST"],
       allowedHeaders: ["Content-Type", "Authorization"],
       credentials: true,
