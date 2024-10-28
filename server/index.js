@@ -10,7 +10,7 @@ app.use(compression());
 
 const allowedOrigins = [
   "*",
-  "http://72.14.201.224:5173",
+  "http://66.128.253.47:5173",
   "http://192.168.50.58:5173",
   "http://localhost:5173",
 ];

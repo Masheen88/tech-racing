@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import PropTypes from "prop-types";
-import { useSocket } from "../utilities/SocketContext";
+import useSocket from "@utilities/useSocket";
 import { useEngineSound } from "./useEngineSound";
 import { useCarPosition } from "./useCarPosition";
 import { useJumpEffect } from "./useJumpEffect";

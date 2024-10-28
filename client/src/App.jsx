@@ -7,13 +7,14 @@ import {
   lazy,
   Suspense,
 } from "react";
-import { useSocket } from "./components/utilities/SocketContext";
+import useSocket from "./components/utilities/useSocket";
 import "./App.module.css";
 import { compressImage } from "./components/utilities/compressImage";
 import { useMusicPlayer } from "./components/hooks/useMusicPlayer";
 
 import Track_1 from "./assets/track_1.jpg";
-import { useAudioContext } from "./components/hooks/audioContextProvider";
+
+import useAudioContext from "./components/hooks/useAudioContext";
 
 const MoveCar = lazy(() => import("./components/hooks/moveCar"));
 const Obstacle = lazy(() => import("./components/gameAssets/Obstacle"));
@@ -23,128 +24,12 @@ const Tunnel = lazy(() => import("./components/gameAssets/Tunnel"));
 
 const defaultSpawnLocation = { x: 2762, y: 675, rotation: 328 };
 
-const obstacles = [
-  {
-    id: "obstacle-1",
-    position: { x: 800, y: 400 },
-    size: { width: 400, height: 10 },
-    rotation: 16,
-  },
-  {
-    id: "obstacle-2",
-    position: { x: 400, y: 400 },
-    size: { width: 40, height: 40 },
-    rotation: 0,
-  },
-  {
-    id: "obstacle-3",
-    position: { x: 420, y: 700 },
-    size: { width: 40, height: 40 },
-    rotation: 0,
-  },
-  {
-    id: "obstacle-4",
-    position: { x: 900, y: 105 },
-    size: { width: 40, height: 40 },
-    rotation: 0,
-  },
-  //square obstacle examples
-  {
-    id: "obstacle-5",
-    position: { x: 2400, y: 915 },
-    size: { width: 40, height: 40 },
-    rotation: 0,
-  },
-  //rectangle obstacles
-  {
-    id: "obstacle-6",
-    position: { x: 3020, y: 415 },
-    size: { width: 150, height: 10 },
-    rotation: 90,
-  },
-  {
-    id: "obstacle-7",
-    position: { x: 2770, y: 415 },
-    size: { width: 150, height: 10 },
-    rotation: 90,
-  },
-  {
-    id: "obstacle-8",
-    position: { x: 2745, y: 550 },
-    size: { width: 150, height: 10 },
-    rotation: 110,
-  },
-  {
-    id: "obstacle-9",
-    position: { x: 3000, y: 550 },
-    size: { width: 150, height: 10 },
-    rotation: 110,
-  },
-  {
-    id: "obstacle-10",
-    position: { x: 2510, y: 670 },
-    size: { width: 300, height: 10 },
-    rotation: 160,
-  },
-  {
-    id: "obstacle-11",
-    position: { x: 2840, y: 715 },
-    size: { width: 260, height: 10 },
-    rotation: 130,
-  },
-  {
-    id: "obstacle-12",
-    position: { x: 1400, y: 500 },
-    size: { width: 40, height: 80 },
-    rotation: 15,
-  },
-  {
-    id: "obstacle-16",
-    position: { x: 1342, y: 715 },
-    size: { width: 40, height: 55 },
-    rotation: 15,
-  },
-];
-
-const walls = [
-  {
-    id: "wall-1",
-    position: { x: 1000, y: 220, rotation: 17 },
-    size: { width: 250, height: 10 },
-  },
-  {
-    id: "wall-2",
-    position: { x: 1250, y: 260, rotation: 0 },
-    size: { width: 250, height: 10 },
-  },
-  {
-    id: "wall-3",
-    position: { x: 1435, y: 588, rotation: 13.5 },
-    size: { width: 800, height: 10 },
-  },
-  {
-    id: "wall-4",
-    position: { x: 1353, y: 871, rotation: 14 },
-    size: { width: 800, height: 10 },
-  },
-];
-
-const ramps = [
-  {
-    id: "ramp-1",
-    position: { x: 1000, y: 265, rotation: 115 },
-    size: { width: 80, height: 100 },
-    direction: "up", // or "up", "down", "left"
-  },
-];
-
-const tunnels = [
-  {
-    id: "tunnel-1",
-    position: { x: 1399, y: 670, rotation: 193 },
-    size: { width: 800, height: 150 },
-  },
-];
+import {
+  obstacles,
+  ramps,
+  tunnels,
+  walls,
+} from "./components/gameAssets/object_locations/index";
 
 function App() {
   const socket = useSocket();
@@ -322,7 +207,7 @@ function App() {
   const boardArea = { width: 3200, height: 1000 };
 
   const viewportStyle = {
-    width: "100dvw",
+    width: "50dvw",
     height: "100dvh",
     overflow: "hidden",
     position: "absolute",
@@ -372,7 +257,9 @@ function App() {
       <button
         onClick={() => {
           handleStart();
-          playMusic("http://66.128.253.47:5173/music/tech_racing_3.mp3");
+          playMusic(
+            `http://${import.meta.env.VITE_APP_IP}:5173/music/tech_racing_3.mp3`
+          );
         }}
       >
         Start Race

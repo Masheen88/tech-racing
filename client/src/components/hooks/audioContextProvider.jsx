@@ -1,5 +1,5 @@
 //audioContextProvider.jsx
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 export const AudioContext = createContext(null);
@@ -39,16 +39,6 @@ export const AudioContextProvider = ({ children }) => {
 
 AudioContextProvider.propTypes = {
   children: PropTypes.node,
-};
-
-export const useAudioContext = () => {
-  const context = useContext(AudioContext);
-  if (context === null) {
-    throw new Error(
-      "useAudioContext must be used within an AudioContextProvider"
-    );
-  }
-  return context;
 };
 
 export default AudioContextProvider;

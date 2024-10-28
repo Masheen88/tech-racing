@@ -18,8 +18,8 @@ export const useEngineSound = (max_speed, isReverbEnabled) => {
   });
 
   const volumeControl = {
-    minVolume: 0.058,
-    maxVolume: 0.09,
+    minVolume: 0.048,
+    maxVolume: 0.08,
     minSpeed: 0,
     maxSpeed: 40,
   };

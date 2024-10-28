@@ -1,4 +1,5 @@
-import { createContext, useContext, useMemo } from "react";
+// SocketContext.jsx
+import { createContext, useMemo } from "react";
 import io from "socket.io-client";
 import propTypes from "prop-types";
 
@@ -27,7 +28,8 @@ export const SocketProvider = ({ children }) => {
     const port = "3001";
     return host === "localhost"
       ? `${protocol}//localhost:${port}`
-      : `${protocol}//72.14.201.224:${port}`;
+      : // Use the environment variable for production
+        `${protocol}//${import.meta.env.VITE_APP_IP}:${port}`;
   }, []);
 
   // Initialize socket connection with dynamic server address
@@ -48,4 +50,4 @@ SocketProvider.propTypes = {
 };
 
 // Custom hook to use the socket
-export const useSocket = () => useContext(SocketContext);
+export default SocketContext;
